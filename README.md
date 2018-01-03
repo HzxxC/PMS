@@ -1,2 +1,0 @@
-# PMS
-Property Management System
