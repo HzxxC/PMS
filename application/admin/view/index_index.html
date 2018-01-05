@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>首页</title>
+</head>
+<body>
+	
+
+	<button type="button" id="admin_logout">退出</button>
+
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+
+		$('#admin_logout').on('click',  function() {
+
+			$.get('{:url("login/logout")}', function(data) {
+
+				if (data.code == '200') {
+					window.location.href = data.url;
+				}
+
+			}, 'JSON');
+		});
+
+	</script>
+</body>
+</html>
