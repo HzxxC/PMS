@@ -21,9 +21,9 @@ use think\Session;
 function pms_admin_account_check($value) {
 
 	$res = Db::name('users') 
-		-> where('account', $value) 
-		-> where('type', 'in', [ADMINISTRATOR, MANAGER, DEVELOPER])
-		-> find();
+				-> where('account', $value) 
+				-> where('type', 'in', [ADMINISTRATOR, MANAGER, DEVELOPER])
+				-> find();
 
 	return !$res ? 0 : $res;
 
@@ -38,9 +38,9 @@ function pms_admin_account_check($value) {
 function pms_admin_password_check($id, $value) {
 	
 	return Db::name('users') 
-		-> where('id', $id) 
-		-> where('password', $value)
-		-> count();
+				-> where('id', $id) 
+				-> where('password', $value)
+				-> count();
 
 }
 
@@ -58,14 +58,36 @@ function pms_admin_login_success($value) {
 	$data['last_login_time'] = date('Y-m-d H:i:s', time());
 
 	return Db::name('users')
-		-> where('id', session('ADMIN.ID'))
-		-> update($data);
+				-> where('id', session('ADMIN.ID'))
+				-> update($data);
 
 }
 
+/**
+ * 管理员账户退出
+ * @return true
+ */
 function pms_admin_logout_success() {
 	 
 	session('ADMIN', null);
 	
 	return true;
+}
+
+/**
+ * 获取单个管理员信息
+ * @param  bigint $admin_id 管理员ID
+ * @param  string $field    需要获取的信息 SQL
+ * @return array            管理员信息数组
+ */
+function pms_get_admin_info_single($admin_id, $field = '*') {
+
+	$where = [
+		'id' => $admin_id,
+		'status' => 1
+	];
+
+	return Db::name('users') 
+				-> field($field)
+				-> where($where) -> find();
 }

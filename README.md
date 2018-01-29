@@ -9,3 +9,9 @@ Property Management System
 	WIN10系统，PHP-7.0.12（最新版本：7.2.0） + Apache + MySQL 5.5.53 （最新版本：5.7.20）
 系统框架
 	ThinkPHP 5.0.14
+
+
+Bootstrap 3.3.7
+
+Font-Awesome 4.7.0
+

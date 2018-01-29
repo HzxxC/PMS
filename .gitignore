@@ -3,3 +3,10 @@ composer.lock
 *.log
 _resources
 composer.json
+thinkphp
+vendor
+.gitignore
+.travis.yml
+.htaccess
+think
+runtime

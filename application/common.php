@@ -25,6 +25,24 @@ function get_client_ip($type = 0, $adv = false) {
 }
 
 /**
+ * 获取网站根目录
+ * @param  string $value 
+ * @param  string $id    
+ * @return bool        验证码是否正确
+ */
+function pms_get_root() {
+	
+    $root    = request()->root();
+    $root    = str_replace('/index.php', '', $root);
+    if (defined('APP_NAMESPACE') && APP_NAMESPACE == 'api') {
+        $root = preg_replace('/\/api$/', '', $root);
+        $root = rtrim($root, '/');
+    }
+
+    return $root;
+}
+
+/**
  * 校验验证码
  * @param  string $value 
  * @param  string $id    
@@ -35,3 +53,5 @@ function pms_captcha_check($value, $id = "") {
 	$captcha = new \think\captcha\Captcha();
     return $captcha->check($value, $id);
 }
+
+

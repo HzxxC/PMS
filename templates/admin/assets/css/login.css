@@ -1,0 +1,9 @@
+@charset 'uft-8';
+
+body {
+    font-family: "Microsoft YaHei", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #555;
+    background-color: #463a2c;
+}

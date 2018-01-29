@@ -1,37 +1,37 @@
 <?php
 // +----------------------------------------------------------------------
-// | Login.php [ 后端首页 模块 ]
+// | Corp.php [ 后端物业管理 模块 ]
 // +----------------------------------------------------------------------
 // | Author: Pengchu <1054115632@qq.com>
 // +----------------------------------------------------------------------
-// | Time: 2017-01-03
+// | Time: 2017-01-29
 // +----------------------------------------------------------------------
 
 namespace app\admin\controller;
 
 
-class Index extends AdminBaseController 
+class Property extends AdminBaseController 
 {
 
 	/**
-	 * 后端首页页面
-	 * @return 页面
+	 * 物业管理模块首页
 	 */
 	public function index() {
 
-		// 租金到期企业 计数
-		// 未租房间 计数
-		// 物业费缴费提醒 计数
-		
-		
-		// 客户预约列表
-		// 到期企业列表
-		// 未租房间列表
-		// 物业费缴费提醒列表
+		// 入驻公司 计数
+
+		//公司信息列表
 
 		return $this->fetch();	
 	}
 
+	/**
+	 * 物业管理 缴费提交
+	 */
+	public function payment() {
+
+		return $this->fetch();
+	}
 
 
 	public function test() {

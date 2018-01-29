@@ -7,9 +7,32 @@
 // | Time: 2017-01-04
 // +----------------------------------------------------------------------
 
+// 定义网站根目录
+define('__ROOT__',          pms_get_root());
+
 define('ADMINISTRATOR', 	1);
 define('MANAGER', 			2);
 define('MERCHANT', 			3);
 define('DEVELOPER', 		9);
 
-return [];
+return [
+
+	// +----------------------------------------------------------------------
+    // | 模板设置
+    // +----------------------------------------------------------------------
+    'template'               => [
+        // 模板路径
+        'view_path'    => ROOT_PATH . 'templates' . DS . 'admin' . DS,
+         // 模板后缀
+        'view_suffix'  => 'html',
+        // 模板文件名分隔符
+        'view_depr'    => '_'
+    ],
+
+    // 视图输出字符串内容替换
+    'view_replace_str'      => [
+        '__PUBLIC__'   => __ROOT__ . '/' . 'templates' . '/' . 'public',
+        '__ADMIN__'    => __ROOT__ . '/' . 'templates' . '/' . 'admin' 
+    ],
+
+];

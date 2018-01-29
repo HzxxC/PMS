@@ -25,6 +25,7 @@ class Login extends AdminBaseController
 		if (!empty(session('ADMIN.ID'))) {
 
 			$this->redirect(url("admin/index/index"));
+
 		} else {
 
 			return $this->fetch();
