@@ -13,7 +13,7 @@
 	{include file="public/nav"}
 
 	<div class="container main-box">
-		<div class="box-nav">
+		<div class="box-nav box-shadow-black">
 			<div class="nav-header clearfix">
 				<p class="f-left" style="font-size: 16px; font-weight: 600;">下午好，<span class="name">Administration</span></p>
 				<p class="f-right" style="padding-top: 4px; font-size: 12px; color: #848484;">上次登陆时间：2018-02-01 10:55:22</p>
@@ -50,26 +50,60 @@
 				</ul>
 			</div>
 		</div>
-		<div class="box-table">
-			<div class="table-header clearfix">
-				<h3 class="title f-left">
-					公司列表
-					<em>点击公司名称查看申请表单</em>
-				</h3>
-				<a href="#" class="f-right btn btn-warning">添加信息</a>
+		<div class="box-list m-b-35 clearfix">
+			<div class="f-left w-30 bg-white m-r-2  box-shadow-black">
+				<div class="header-title-box">
+					<h3 class="text-center">客户预约表</h3>
+				</div>
 			</div>
-			<div class="table-body">
-				<table class="table table-bordered">
-			        <tr>
-			          <th>公司名称</th>
-			          <th>申请人</th>
-			          <th>联系方式</th>
-			          <th>申请房间</th>
-			          <th>到租日期</th>
-			          <th>费用</th>
-			          <th>编辑</th>
-			        </tr>
-			    </table>
+			<div class="f-left w-68 bg-white  box-shadow-black">
+				<div class="header-title-box clearfix">
+					<h3 class="f-left line-before w-30 m-r-2">到期企业列表</h3>
+					<div class="f-right w-45 search">
+						<div class="input-group">
+					      <input type="text" class="form-control" placeholder="企业名称或申请人">
+					      <span class="input-group-btn">
+					        <button class="btn btn-default" type="button">搜索</button>
+					      </span>
+					    </div>
+					</div>
+				</div>
+				<div class="table-body  m-t-15">
+					<table class="table table-bordered">
+				        <tr>
+				          <th>公司名称</th>
+				          <th>申请人</th>
+				          <th>联系方式</th>
+				          <th>到租日期</th>
+				        </tr>
+				    </table>
+				</div>
+				<a href="" class="f-right color-0076A8">点击查看更多</a>
+			</div>
+		</div>
+		<div class="box-list m-b-35 clearfix">
+			<div class="f-left w-49 bg-white m-r-2  box-shadow-black">
+				<div class="header-title-box">
+					<h3 class="f-left line-before m-r-2">未出租店铺</h3>
+					<a href="" class="f-right color-0076A8 pad-10-20">点击查看更多</a>
+				</div>
+			</div>
+			<div class="f-left w-49 bg-white  box-shadow-black">
+				<div class="header-title-box clearfix">
+					<h3 class="f-left line-before m-r-2">物业费到期提醒</h3>
+					<a href="" class="f-right color-0076A8  pad-10-20">点击查看更多</a>
+				</div>
+				<div class="table-body  m-t-15">
+					<table class="table table-bordered">
+				        <tr>
+				          <th>公司名称</th>
+				          <th>申请人</th>
+				          <th>联系方式</th>
+				          <th>到租日期</th>
+				        </tr>
+				    </table>
+				</div>
+				
 			</div>
 		</div>
 	</div>	

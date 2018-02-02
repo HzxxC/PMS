@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>首页</title>
+	<meta name="description" content="" >
+	<meta name="keywords" content="" >
+	
+	{include file="public/header"}
+
+</head>
+<body>
+	{include file="public/nav"}
+
+	<div class="container main-box">
+		<div class="box-nav">
+			<div class="nav-header clearfix">
+				<p class="f-left" style="font-size: 16px; font-weight: 600;">下午好，<span class="name">Administration</span></p>
+				<p class="f-right" style="padding-top: 4px; font-size: 12px; color: #848484;">上次登陆时间：2018-02-01 10:55:22</p>
+			</div>
+			<div class="nav-list">
+				<ul class="clearfix">
+					<li class="li-item index-expire">
+						<a href="" class="clearfix">
+							<img src="__ADMIN__/assets/images/li-icon-expire.png" alt="" class="f-left">
+							<p class="f-left">
+								<span class="name">本月到期企业</span>
+								<span class="count">27</span>
+							</p>
+						</a>
+					</li>
+					<li class="li-item index-unleased">
+						<a href="" class="clearfix">
+							<img src="__ADMIN__/assets/images/li-icon-unleased.png" alt="" class="f-left">
+							<p class="f-left">
+								<span class="name">未租店铺</span>
+								<span class="count">27</span>
+							</p>
+						</a>
+					</li>
+					<li class="li-item index-remind">
+						<a href="" class="clearfix">
+							<img src="__ADMIN__/assets/images/li-icon-remind.png" alt="" class="f-left">
+							<p class="f-left">
+								<span class="name">物业费提醒</span>
+								<span class="count">27</span>
+							</p>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="box-table">
+			<div class="table-header clearfix">
+				<h3 class="title f-left">
+					公司列表
+					<em>点击公司名称查看申请表单</em>
+				</h3>
+				<a href="#" class="f-right btn btn-warning">添加信息</a>
+			</div>
+			<div class="table-body">
+				<table class="table table-bordered">
+			        <tr>
+			          <th>公司名称</th>
+			          <th>申请人</th>
+			          <th>联系方式</th>
+			          <th>申请房间</th>
+			          <th>到租日期</th>
+			          <th>费用</th>
+			          <th>编辑</th>
+			        </tr>
+			    </table>
+			</div>
+		</div>
+	</div>	
+
+	{include file="public/footer"}
+	{include file="public/script"}
+	
+</body>
+</html>

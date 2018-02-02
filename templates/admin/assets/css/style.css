@@ -23,11 +23,55 @@ p {
 ul, ol {
 	list-style: none;
 }
+h3 {
+	margin: 0;
+	font-size: 18px;
+	font-weight: 600;
+}
+.bg-white {
+	background-color: #fff;
+}
 .f-left {
 	float: left;
 }
 .f-right {
 	float: right;
+}
+.w-30 {
+	width: 30%;
+}
+.w-68 {
+	width: 68%;
+}
+.w-45 {
+	width: 45%;
+}
+.w-49 {
+	width: 49%;
+}
+.m-r-2 {
+	margin-right: 2%;
+}
+.m-t-25 {
+	margin-top: 25px;
+}
+.m-t-15 {
+	margin-top: 15px;
+}
+.m-b-35 {
+	margin-bottom: 35px;
+}
+.pad-10-20 {
+	padding: 10px 20px;
+}
+.text-center {
+	text-align: center;
+}
+.color-0076A8 {
+	color: #0076A8;
+}
+.box-shadow-black {
+	box-shadow: 0 5px 9px rgba(0,0,0,.15);
 }
 .container {
 	padding-left: 0;
@@ -91,7 +135,7 @@ ul, ol {
 .main-box .box-nav {
 	position: relative;
 	background-color: #fff;
-	box-shadow: 0 5px 9px rgba(0,0,0,.15);
+	
 	border-radius: 4px;
 	position: relative;
 	top: -40px;
@@ -99,7 +143,7 @@ ul, ol {
 }
 .main-box .box-table {
 	background-color: #fff;
-	box-shadow: 0 5px 9px rgba(0,0,0,.15);
+	
 	border-radius: 4px;
 	padding: 10px 20px;
 }
@@ -159,6 +203,40 @@ ul, ol {
 	background-color: #1DB2CA;
 }
 
+.box-list > div {
+	border-radius: 4px;
+	height: 300px;
+	padding: 10px 25px;
+}
+.header-title-box h3 {
+	padding: 10px 20px;
+}
+.header-title-box h3.line-before {
+	position: relative;
+}
+.header-title-box h3.line-before:before {
+	display: inline-block;
+	content: '';
+	width: 2px;
+    height: 24px;
+    background-color: #117FAE;
+    position: absolute;
+    top: 8px;
+    left: 0px;
+}
+.header-title-box .search input {
+	border-top-left-radius: 24px;
+	border-bottom-left-radius: 24px;
+	padding-left: 18px;
+}
+.header-title-box .search button {
+	border-top-right-radius: 24px;
+	border-bottom-right-radius: 24px;
+	padding-right: 18px;
+	background-color: #0076A8;
+	color: #fff;
+}
+
 .box-table .table-header {
 	padding: 5px 0 15px;
 }
@@ -188,10 +266,15 @@ ul, ol {
     /*position: absolute;*/
     text-align: center;
     width: 100%;
+    background-color: #006599;
+    color: #fff;
 }
 .footer {
 	font-size: 12px;
 	margin: 25px 0 0;
+}
+.footer a {
+	color: #fff;
 }
 .footer .footer-links {
 	padding: 15px 0 0;
