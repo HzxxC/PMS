@@ -1,0 +1,20 @@
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script>
+<script>
+
+	// 账户注销
+	$('#admin_logout').on('click',  function() {
+
+		$.get('{:url("login/logout")}', function(data) {
+
+			if (data.code == '200') {
+				window.location.href = data.url;
+			}
+
+		}, 'JSON');
+	});
+
+</script>
+<!-- \\ public_script.html END \\ -->

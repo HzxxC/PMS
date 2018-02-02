@@ -14,6 +14,22 @@ use think\Request;
 use think\Session;
 
 /**
+ * 时间划分函数
+ * @return string 当前所属时间段
+ */
+function pms_get_time_division() {
+	
+	$hour = date('H', time());
+	$hour_str = "";
+	if ($hour < 11) $hour_str = "早上好";
+	elseif ($hour < 14) $hour_str = "中午好";
+	elseif ($hour < 18) $hour_str = "下午好";
+	else $hour_str = "晚上好";
+
+	return $hour_str;
+}
+
+/**
  * 校验管理员账户名
  * @param  string $value 	[需要校验的账户名]
  * @return boolean    		[账户名存在，返回 TRUE, 否则返回 FALSE]
@@ -90,4 +106,36 @@ function pms_get_admin_info_single($admin_id, $field = '*') {
 	return Db::name('users') 
 				-> field($field)
 				-> where($where) -> find();
+}
+
+/**
+ * 获取网站站点信息
+ * @return array 网站数据
+ */
+function pms_get_site_info() {
+
+	$option_value = Db::name('option') 
+						-> where('option_name', 'site_info')
+						-> value('option_value');
+	
+	if (!empty($option_value)) {
+		$option_value = json_decode($option_value, true);
+	}
+
+	return $option_value;
+}
+
+/**
+ * 获取网站友情链接列表
+ * @return  array  友情链接数组
+ */
+function pms_get_links() {
+
+	$links = Db::name('link')
+					-> where('status', '1')
+					-> order('list_order ASC')
+					-> select();
+
+	return $links;
+
 }
