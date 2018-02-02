@@ -1,49 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta name="author" content="hzxx-cp">
-	<meta charset="UTF-8">
-	
-	<title>登陆</title>
-
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<!-- SEO -->
-	<meta name="description" content="">
-	<meta name="keywords" content="">	
-
-	<link rel="shortcut icon" type="image/x-icon" href="__PUBLIC__/favicon.ico">
-
-	<link rel="stylesheet" href="__ADMIN__/assets/css/login.css">
-	
+    <meta name="author" content="hzxx-cp">
+    <meta charset="UTF-8">
+    <title>登陆</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <!-- SEO -->
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="shortcut icon" type="image/x-icon" href="__PUBLIC__/favicon.ico">
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__ADMIN__/assets/css/login.css">
 </head>
+
 <body>
-	
+    <div class="login-content">
+        <div class="container w-820-px" style="">
+            <div class="login-box-header">
+                <img src="__ADMIN__/assets/images/login-logo.png" alt="" class="logo">
+            </div>
+            <div class="login-form-box clearfix bg-white">
+                <div class="f-left w-420-px m-r-30-px">
+                    <img src="" alt="" style="display:block; background-color: #f00; height: 240px; border-radius: 8px;">
+                </div>
+                <div class="f-left w-260-px form-body">
+                    <form class="form-horizontal" id="admin_login_form">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="text" name="username" class="form-control"  placeholder="用户名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="password" name="password" class="form-control"  placeholder="密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="text" name="captcha" class="form-control" placeholder="验证码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                               <span class="err-msg"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button type="button" class="btn btn-primary" id="admin_login">登陆</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {include file="public/footer"}
+        </div>
+    </div>
+   
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+    $('#admin_login').on('click', function() {
 
-	<form action="post" id="admin_login_form">
-			
-		<input type="text" name="username" value="" placeholder="账户名">
-		<input type="password" name="password" value="" placeholder="密码">
+        $.post('login', $('#admin_login_form').serialize(), function(data) {
 
-		<button type="button" id="admin_login">登陆</button>
+            if (data.code == 200) {
+                window.location.href = data.url;
+            }
 
-	</form>
-
-	{include file="public/footer"}	
-	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-	<script>
-
-		$('#admin_login').on('click',  function() {
-
-			$.post('login', $('#admin_login_form').serialize(), function(data) {
-
-				if (data.code == 200) {
-					window.location.href = data.url;
-				}
-
-			}, 'JSON');
-		});
-
-	</script>
+        }, 'JSON');
+    });
+    </script>
 </body>
+
 </html>

@@ -49,6 +49,15 @@ h3 {
 .w-49 {
 	width: 49%;
 }
+.w-128-px {
+	width: 128px;
+}
+.w-210-px {
+	width: 210px;
+}
+.w-420-px {
+	width: 420px;
+}
 .m-r-2 {
 	margin-right: 2%;
 }
@@ -67,11 +76,20 @@ h3 {
 .text-center {
 	text-align: center;
 }
+.color-red {
+	color: red;
+}
 .color-0076A8 {
 	color: #0076A8;
 }
+.color-007BBE {
+	color: #007BBE;
+}
 .box-shadow-black {
 	box-shadow: 0 5px 9px rgba(0,0,0,.15);
+}
+.border-bottom {
+	border-bottom: 1px solid #007BBE;
 }
 .container {
 	padding-left: 0;
@@ -132,7 +150,7 @@ h3 {
 }
 
 /* main-box */
-.main-box .box-nav {
+.main-box .box-nav, .main-box .box-form {
 	position: relative;
 	background-color: #fff;
 	
@@ -236,7 +254,51 @@ h3 {
 	background-color: #0076A8;
 	color: #fff;
 }
-
+.box-form {
+	padding: 25px;
+}
+.box-form .form-title h3 {
+	position: relative;
+	font-size: 21px;
+	padding: 10px 20px;
+}
+.box-form .form-title h3.line-before:before {
+	display: inline-block;
+	content: '';
+	width: 6px;
+    height: 24px;
+    background-color: #117FAE;
+    position: absolute;
+    top: 10px;
+    left: 0px;
+}
+.box-form .form-body {
+	padding: 25px 35px;
+}
+.form-body .form-header {
+	padding-bottom: 25px;
+}
+.box-form .form-body .form-header span {
+	font-size: 14px;
+	margin-left: 10px;
+}
+.box-form .form-body .form-group label span {
+	font-size: 12px;
+	margin-right: 8px;
+	position: relative;
+	top: 2px;
+}
+.form-body .form-horizontal {
+	padding-left: 50px;
+}
+.form-body .form-horizontal .control-label {
+	text-align: left;
+}
+.form-body .form-group span.more {
+	display: inline-block;
+	line-height: 34px;
+	padding: 0 20px;
+}
 .box-table .table-header {
 	padding: 5px 0 15px;
 }
