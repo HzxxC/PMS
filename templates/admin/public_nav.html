@@ -4,7 +4,7 @@
 		<div class="container">
 			<ul class="nav navbar-nav f-right">
 	            <li class="dropdown">
-	              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">下午好，<span class="name">Administration</span> <span class="caret"></span></a>
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{$time_division}，<span class="name">{$admin_info.nikename}</span> <span class="caret"></span></a>
 	              <ul class="dropdown-menu">
                 	<li><a href="#">账户信息</a></li>
 					<li><a href="#">修改密码</a></li>
@@ -22,11 +22,11 @@
 			<img src="__ADMIN__/assets/images/logo.png" alt="">
 		</a>
 		<ul class="f-right">
-			<li class="active"><a href="">首页</a></li>
-			<li><a href="">公司信息</a></li>
-			<li><a href="">物业管理</a></li>
-			<li><a href="">店铺管理</a></li>
-			<li><a href="">信息中心</a></li>
+			<li class="active"><a href="{:url('index/index')}">首页</a></li>
+			<li><a href="{:url('corp/index')}">公司信息</a></li>
+			<li><a href="{:url('property/index')}">物业管理</a></li>
+			<li><a href="{:url('room/index')}">店铺管理</a></li>
+			<li><a href="{:url('index/index')}">信息中心</a></li>
 		</ul>
 	</div>
 </nav>

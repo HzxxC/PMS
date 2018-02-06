@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <meta name="description" content="">
+    <meta name="keywords" content=""> {include file="public/header"}
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap-tagsinput.css">
+</head>
+
+<body>
+    {include file="public/nav"}
+    <div class="container main-box">
+        <div class="box-form">
+            <form class="form-horizontal" method="post" action="{:url('admin/Room/index')}">
+                <div class="form-title">
+                    <h3 class="line-before color-007BBE">房间查询</h3>
+                </div>
+                <div class="form-body">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4">
+                            <div class="form-group">
+                                <label for="" class="col-sm-4 control-label text-left">公司名称</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control m-l-45-px" name="corp_name" value="{$search_info.corp_name | default=''}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-sm-4 control-label text-left">房间号码</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control  m-l-45-px" name="room_id" value="{$search_info.room_id | default=''}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-md-4">
+                            <div class="form-group">
+                                <label for="" class="col-sm-4 control-label text-left">缴费状态</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control m-l-45-px" name="pay_status">
+                                    	<option value="-1">全部</option>
+                                        {volist name="pay_status" id="vo"}
+                                        	<option value="{$vo.status}">{$vo.name}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-sm-4 control-label text-left">入驻时间</label>
+                                <div class="col-sm-5 m-l-45-px input-icon-inner">
+                                    <input type="text" class="form-control" id="datetimepicker-start" name="start" value="{$search_info.start | default=''}">
+                                    <i class="fa fa-calendar  color-007BBE"></i>
+                                </div>
+                                <span class="pos-relative" style="top: 8px; left: -110px">至</span>
+                                <div class="col-sm-5 m-l-45-px input-icon-inner pos-relative" style="right: -48px;">
+                                    <input type="text" class="form-control" id="datetimepicker-end"  name="end" value="{$search_info.end | default=''}">
+                                    <i class="fa fa-calendar  color-007BBE"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-md-4">
+                            <div class="form-group pos-relative" style="top:48px;">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-primary col-sm-4 m-r-25-px">查找</button>
+                                    <button type="submit" class="btn btn-warning col-sm-4">重置</button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="box-table">
+            <div class="table-header clearfix">
+                <h3 class="pos-relative title f-left line-before color-007BBE p-l-20-px">
+					房间信息列表
+					<em>点击房间名称查看详细信息</em>
+				</h3>
+                <a href="javascript" class="f-right btn btn-info"  data-toggle="modal" data-target="#roomModal">添加信息</a>
+            </div>
+            <div class="table-body clearfix">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>房间号</th>
+                        <th>面积</th>
+                        <th>费用</th>
+                        <th>设施详情</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    {volist name="room_list.rooms" id="vo"}
+                    	<tr>
+                    		<td class="text-center">{$vo.room_no}</td>
+                    		<td class="text-center">{$vo.room_area}</td>
+                    		<td class="text-center">{$vo.room_rent}</td>
+                    		<td>{$vo.room_facility}</td>
+                    		<td class="text-center">{$vo.room_status}</td>
+                    		<td></td>
+                    	</tr>
+                    {/volist}
+                </table>
+                <div class="pages f-right">
+                	{$room_list.page}
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="roomModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header border-none">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="roomModalLabel">房间信息</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<form class="form-horizontal" id="form-roominfo" style="width: 75%; margin: 0 auto;">
+			  <div class="form-group">
+			    <label for="" class="col-sm-3 control-label"><span class="color-red input-must">*</span>房间号码</label>
+			    <div class="col-sm-6">
+			      <input type="text" class="form-control" name="room_no">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="" class="col-sm-3 control-label"><span class="color-red input-must">*</span>使用面积</label>
+			    <div class="col-sm-5">
+			    	<div class="input-group">
+			    		<input type="text" class="form-control" name="room_area">
+			      		<div class="input-group-addon">m<sup>2</sup></div>
+			    	</div>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="" class="col-sm-3 control-label"><span class="color-red input-must">*</span>租金(年)</label>
+			    <div class="col-sm-5">
+			      <div class="input-group">
+			    		<input type="text" class="form-control" name="room_rent">
+			      		<div class="input-group-addon">元</div>
+			    	</div>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="" class="col-sm-3 control-label">设施情况</label>
+			    <div class="col-sm-9">
+				  	<input type="text" class="form-control" placeholder="添加设施" value="" name="room_facility" data-role="tagsinput">
+				  	<p class="help-block color-a94442">输入标签，Enter确认</p>
+			    </div>
+			  </div>
+			</form>
+	      </div>
+	      <div class="ajax-err-msg fade">
+	      	<p>房价号码也存在，请重新输入</p>
+	      </div>
+	      <div class="modal-footer border-none">
+	      	<input type="hidden" value="add_post" id="post">
+	        <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+	        <button type="button" class="btn btn-success" id="form-submit">保存</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+    {include file="public/footer"} {include file="public/script"}
+    <script src="__PUBLIC__/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/bootstrap-tagsinput.min.js"></script>
+    <script src="__PUBLIC__/bootstrap/js/bootstrap-validator.min.js"></script>
+    <script>
+    	
+
+		$(function() {
+			// 模态框
+	    	$('#roomModal').on('hidden.bs.modal', function (e) {
+	    		// 模态框关闭时，清空表单
+	    		$('#form-roominfo')[0].reset();
+		    	$('.ajax-err-msg').hide();
+		    	// $('.bootstrap-tagsinput span').remove('span.tag');
+			});
+
+	    	// 日期插件
+			$('#datetimepicker-start, #datetimepicker-end').datetimepicker({
+		        autoclose: true,
+		        todayHighlight: true,
+		        minView: "month", //设置只显示到月份
+		        startView: 2,
+		        todayBtn: true,
+		        language: "zh-CN",
+		        format: "yyyy-mm-dd"
+		    });
+
+			// $("#form-roominfo").bootstrapValidator({
+		 //        message: 'This value is not valid',
+		 //        fields: {
+		 //            room_no: {
+		 //                validators: {
+		 //                    notEmpty: {
+		 //                        message: '房间号码不能为空'
+		 //                    }
+		 //                }
+		 //            },
+		 //            room_area: {
+		 //                validators: {
+		 //                    notEmpty: {
+		 //                        message: '房间面积不能为空'
+		 //                    },
+		 //                    regexp: {
+			// 					regexp: /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/,
+			// 					message: '请输入正确的面积'
+		 //                    }
+		 //                }
+		 //            },
+		 //            room_rent: {
+		 //                validators: {
+		 //                    notEmpty: {
+		 //                        message: '房间租金不能为空'
+		 //                    }
+		 //                }
+		 //            },
+		 //        }
+		 //    });
+		    // 提交
+		    $('#form-submit').on('click', function() {
+		    	var url = checkPostUrl($('#post').val());
+		    	console.log($('#form-roominfo').serialize());
+		  //   	var bootstrapValidator = $("#form-roominfo").data('bootstrapValidator');
+				// bootstrapValidator.validate();
+				// if(bootstrapValidator.isValid()) {
+				// 	$.post(url, $('#form-roominfo').serialize(), function(data) {
+			 //            if (data.code == 200) {
+			 //            	$('.ajax-err-msg p').text(data.message);
+			 //            	$('.ajax-err-msg').addClass('in success').show();
+			 //            	setTimeout(function() {
+			 //            		$('.ajax-err-msg').removeClass('in success').hide();
+			 //            		$('#roomModal').modal('hide');
+			 //            	}, 3000);
+			 //            }
+			 //            if (data.code == 400) {
+			 //            	$('.ajax-err-msg p').text(data.message);
+			 //            	$('.ajax-err-msg').addClass('in error').show();
+			 //            	setTimeout(function() {
+			 //            		$('.ajax-err-msg').removeClass('in error').hide();
+			 //            	}, 3000);
+			 //            }
+			 //        }, 'JSON');
+				// }
+		    });
+
+		    $('#form-roominfo input').on('focus', function() {
+		    	if ($('.ajax-err-msg').is(':visible')) {
+		    		$('.ajax-err-msg').hide();
+		    	}
+		    });
+
+		});
+
+		function checkPostUrl(post_type) {
+			return post_type == "add_post" ? "{:url('admin/Room/add_post')}" : "{:url('admin/Room/edit_post')}";
+		}
+
+	    
+    </script>
+</body>
+
+</html>

@@ -139,3 +139,57 @@ function pms_get_links() {
 	return $links;
 
 }
+
+function pms_get_room_list($param = array()) {
+
+	$where = [
+	];
+
+	$limit = empty($param['limit']) ? 10 : $param['limit'];
+	$order = empty($param['order']) ? 'r.create_time desc' : $param['order'];
+	$page = isset($param['page']) ? $param['page'] : false;
+
+	$rooms = Db::name('rooms') -> alias('r')
+					-> where($where)
+					-> order($order);
+	$return = [];
+
+	if (empty($page)) {
+
+		$rooms = $rooms->limit($limit)->select();
+        $return['rooms'] = $rooms;
+	
+	} else {
+
+        if (is_array($page)) {
+            if (empty($page['list_rows'])) {
+                $page['list_rows'] = 10;
+            }
+
+            $rooms = $rooms->paginate($page);
+        } else {
+            $rooms = $rooms->paginate(intval($page));
+        }
+
+        $rooms->appends(request()->param());
+
+        $return['rooms']    = $rooms->items();
+        $return['page']        = $rooms->render();
+        $return['total']       = $rooms->total();
+        $return['total_pages'] = $rooms->lastPage();
+	}
+
+	return $return;
+
+}
+
+function insert_rooms($data) {
+	$data['room_status'] = 0;	// 未租
+	$data['create_time'] = date('Y-m-d H:i:s', time());
+	
+	return Db::name('rooms') -> insert($data);
+}
+
+function update_rooms($data) {
+	return Db::name('rooms') -> update($data);
+}
