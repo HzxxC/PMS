@@ -13,6 +13,10 @@ namespace app\admin\controller;
 class Index extends AdminBaseController 
 {
 
+	public function _initialize() {
+		parent::_initialize();
+		$this->assign('action', 'index');
+	}
 	/**
 	 * 后端首页页面
 	 * @return 页面

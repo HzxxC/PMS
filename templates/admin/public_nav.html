@@ -22,11 +22,11 @@
 			<img src="__ADMIN__/assets/images/logo.png" alt="">
 		</a>
 		<ul class="f-right">
-			<li class="active"><a href="{:url('index/index')}">首页</a></li>
-			<li><a href="{:url('corp/index')}">公司信息</a></li>
-			<li><a href="{:url('property/index')}">物业管理</a></li>
-			<li><a href="{:url('room/index')}">店铺管理</a></li>
-			<li><a href="{:url('index/index')}">信息中心</a></li>
+			<li {eq name="action" value="index"}class="active"{/eq}><a href="{:url('index/index')}">首页</a></li>
+			<li {eq name="action" value="corp"}class="active"{/eq}><a href="{:url('corp/index')}">公司信息</a></li>
+			<li {eq name="action" value="property"}class="active"{/eq}><a href="{:url('property/index')}">物业管理</a></li>
+			<li {eq name="action" value="room"}class="active"{/eq}><a href="{:url('room/index')}">店铺管理</a></li>
+			<li {eq name="action" value="index"}class="active"{/eq}><a href="{:url('index/index')}">信息中心</a></li>
 		</ul>
 	</div>
 </nav>

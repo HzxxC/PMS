@@ -23,6 +23,7 @@ class Room extends AdminBaseController
 			["name" => "未缴费", "status" => 2]
 		];
 		$this->assign('pay_status', $pay_status);
+		$this->assign('action', 'room');
 
 	}
 
@@ -56,7 +57,7 @@ class Room extends AdminBaseController
 			if ($result !== true) {
 				exit(json_encode([ 'code'=>400, 'message'=>$result ]));
 			} else {
-				$res = insert_rooms($data);
+				$res = pms_insert_rooms($data);
 				if ($res) {
 					exit(json_encode([ 'code'=>200, 'message'=>'房间添加成功' ]));
 				}

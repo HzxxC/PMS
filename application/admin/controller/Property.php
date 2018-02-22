@@ -13,6 +13,11 @@ namespace app\admin\controller;
 class Property extends AdminBaseController 
 {
 
+	public function _initialize() {
+		parent::_initialize();
+		$this->assign('action', 'property');
+	}
+
 	/**
 	 * 物业管理模块首页
 	 */
@@ -25,12 +30,37 @@ class Property extends AdminBaseController
 		return $this->fetch();	
 	}
 
+	public function paypage() {
+
+		$this->get_normal_corps();
+
+		$type = input('type');
+
+		if ($type === '1') {
+			$template = 'property_fee';
+		} else {
+			$template = 'property_rent';
+		}
+
+		return $this->fetch($template);
+	}
+
 	/**
 	 * 物业管理 缴费提交
 	 */
 	public function payment() {
 
-		return $this->fetch();
+		
+	}
+
+	public function get_normal_corps() {
+		$param['where'] = [
+			'c.corp_status' => ['neq', 0]
+		];
+		$param['field'] = "c.corp_name, c.id, s.rids, s.room_area";
+		$param['order'] = "c.corp_name DESC";
+
+		$this->assign('normal_corps', pms_get_corp_list($param));
 	}
 
 

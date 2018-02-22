@@ -25,6 +25,14 @@ function get_client_ip($type = 0, $adv = false) {
 }
 
 /**
+ * 返回带协议的域名
+ */
+function pms_get_domain() {
+    $request = Request::instance();
+    return $request->domain();
+}
+
+/**
  * 获取网站根目录
  * @param  string $value 
  * @param  string $id    

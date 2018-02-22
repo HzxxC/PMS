@@ -1,44 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>首页</title>
-	<meta name="description" content="" >
-	<meta name="keywords" content="" >
-	
-	{include file="public/header"}
-
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    {include file="public/header"}
 </head>
-<body>
-	{include file="public/nav"}
 
-	<div class="container main-box">
-		<div class="box-nav">
-			<div class="nav-header clearfix">
-				<p class="f-left" style="font-size: 16px; font-weight: 600;">下午好，<span class="name">Administration</span></p>
-				<p class="f-right" style="padding-top: 4px; font-size: 12px; color: #848484;">上次登陆时间：2018-02-01 10:55:22</p>
-			</div>
-			<div class="nav-list">
-				<ul class="clearfix">
-					<li class="li-item index-expire">
-						<a href="" class="clearfix">
-							<img src="__ADMIN__/assets/images/li-icon-expire.png" alt="" class="f-left">
+<body>
+    {include file="public/nav"}
+    <div class="container main-box">
+        <div class="box-nav box-shadow-black">
+            <div class="nav-header clearfix">
+                <p class="f-left" style="font-size: 16px; font-weight: 600;">{$time_division}，<span class="name">{$admin_info.nikename}</span></p>
+                <p class="f-right" style="padding-top: 4px; font-size: 12px; color: #848484;">上次登陆时间：{$admin_info.last_login_time}</p>
+            </div>
+            <div class="nav-list">
+                <ul class="clearfix">
+                    <li class="li-item index-total">
+                        <a href="" class="clearfix">
+							<img src="__ADMIN__/assets/images/li-icon-total.png" alt="" class="f-left">
 							<p class="f-left">
-								<span class="name">本月到期企业</span>
+								<span class="name">总入驻公司</span>
 								<span class="count">27</span>
 							</p>
 						</a>
-					</li>
-					<li class="li-item index-unleased">
-						<a href="" class="clearfix">
-							<img src="__ADMIN__/assets/images/li-icon-unleased.png" alt="" class="f-left">
-							<p class="f-left">
-								<span class="name">未租店铺</span>
-								<span class="count">27</span>
+                    </li>
+                    <li class="li-item index-enter">
+                        <a href="javascript:parent.openIframeLayer('{:url('admin/Settled/add')}','公司入驻信息管理',{});" class="clearfix" >
+							<img src="__ADMIN__/assets/images/li-icon-enter.png" alt="" class="f-left">
+							<p class="f-left no-count">
+								<span class="name">申请入驻</span>
+								<!-- <span class="count">27</span> -->
 							</p>
 						</a>
-					</li>
-					<li class="li-item index-remind">
+                    </li>
+                    <!-- <li class="li-item index-remind">
 						<a href="" class="clearfix">
 							<img src="__ADMIN__/assets/images/li-icon-remind.png" alt="" class="f-left">
 							<p class="f-left">
@@ -46,36 +45,78 @@
 								<span class="count">27</span>
 							</p>
 						</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div class="box-table">
-			<div class="table-header clearfix">
-				<h3 class="title f-left">
-					公司列表
-					<em>点击公司名称查看申请表单</em>
+					</li> -->
+                </ul>
+            </div>
+        </div>
+        <div class="box-table box-shadow-black">
+            <div class="table-header clearfix">
+                <h3 class="title f-left">
+					公司信息
+					<em>点击公司名称查看详细信息</em>
 				</h3>
-				<a href="#" class="f-right btn btn-warning">添加信息</a>
-			</div>
-			<div class="table-body">
-				<table class="table table-bordered">
-			        <tr>
-			          <th>公司名称</th>
-			          <th>申请人</th>
-			          <th>联系方式</th>
-			          <th>申请房间</th>
-			          <th>到租日期</th>
-			          <th>费用</th>
-			          <th>编辑</th>
-			        </tr>
-			    </table>
-			</div>
-		</div>
-	</div>	
-
-	{include file="public/footer"}
-	{include file="public/script"}
-	
+                <a href="javascript:parent.openIframeLayer('{:url('admin/Corp/add')}','公司信息管理页面',{});" class="f-right btn btn-info">添加信息</a>
+            </div>
+            <div class="table-body">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>#</th>
+                        <th>公司名称</th>
+                        <th>申请人</th>
+                        <th class="w-128-px">联系方式</th>
+                        <th>申请房间</th>
+                        <th>到租日期</th>
+                        <th>入驻状态</th>
+                        <th class="w-210-px">操作</th>
+                    </tr>
+                    {volist name="corp_list.corps" id="vo"}
+                    <tr>
+                        <td class="text-center">{$vo.id}</td>
+                        <td class="text-center"><a href="javascript:parent.openIframeLayer('{:url('admin/Corp/edit', array('id'=>$vo.id))}','公司信息详情',{});">{$vo.corp_name}</a></td>
+                        <td class="text-center">{$vo.corp_person}</td>
+                        <td class="text-center">{$vo.corp_contact}</td>
+                        <td class="text-center">{$vo.rids | default="未入驻"}</td>
+                        <td class="text-center">{$vo.end_time | default="未入驻"}</td>
+                        <td class="text-center">{:pms_corp_status_to_string($vo.corp_status)}</td>
+                        <td class="text-center">
+                            <a href="javascript:parent.openIframeLayer('{:url('admin/Corp/edit', array('id'=>$vo.id))}','公司信息管理页面',{});" class="btn btn-style-2 btn-warning">编辑</a>
+                            <a href="javascript:parent.openDialogLayer('{:url('admin/Corp/del', array('id'=>$vo.id))}', {});" class="btn btn-style-2 btn-danger">删除</a>
+                        </td>
+                    </tr>
+                    {/volist}
+                </table>
+                <div class="pages f-right">
+                    {$corp_list.page}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="settledModal" tabindex="-1" role="dialog" aria-labelledby="settledModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-none">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="settledModalLabel">入驻信息</h4>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="ajax-err-msg fade">
+                    <p></p>
+                </div>
+                <div class="modal-footer border-none">
+                    <input type="hidden" value="add_post" id="post">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">重置</button>
+                    <button type="button" class="btn btn-success" id="form-settled-submit">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file="public/footer"} {include file="public/script"}
+    
+    <script src="__ADMIN__/assets/js/wind.js"></script>
+    <script src="__ADMIN__/assets/js/common.js"></script>
 </body>
+
 </html>

@@ -5,15 +5,18 @@
     <meta charset="UTF-8">
     <title>首页</title>
     <meta name="description" content="">
-    <meta name="keywords" content=""> {include file="public/header"}
+    <meta name="keywords" content=""> 
     <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap-tagsinput.css">
+	
+	{include file="public/header"}
+
 </head>
 
 <body>
     {include file="public/nav"}
     <div class="container main-box">
-        <div class="box-form">
+        <div class="box-form box-shadow-black">
             <form class="form-horizontal" method="post" action="{:url('admin/Room/index')}">
                 <div class="form-title">
                     <h3 class="line-before color-007BBE">房间查询</h3>
@@ -72,7 +75,7 @@
                 </div>
             </form>
         </div>
-        <div class="box-table">
+        <div class="box-table box-shadow-black">
             <div class="table-header clearfix">
                 <h3 class="pos-relative title f-left line-before color-007BBE p-l-20-px">
 					房间信息列表
@@ -191,61 +194,60 @@
 		        format: "yyyy-mm-dd"
 		    });
 
-			// $("#form-roominfo").bootstrapValidator({
-		 //        message: 'This value is not valid',
-		 //        fields: {
-		 //            room_no: {
-		 //                validators: {
-		 //                    notEmpty: {
-		 //                        message: '房间号码不能为空'
-		 //                    }
-		 //                }
-		 //            },
-		 //            room_area: {
-		 //                validators: {
-		 //                    notEmpty: {
-		 //                        message: '房间面积不能为空'
-		 //                    },
-		 //                    regexp: {
-			// 					regexp: /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/,
-			// 					message: '请输入正确的面积'
-		 //                    }
-		 //                }
-		 //            },
-		 //            room_rent: {
-		 //                validators: {
-		 //                    notEmpty: {
-		 //                        message: '房间租金不能为空'
-		 //                    }
-		 //                }
-		 //            },
-		 //        }
-		 //    });
+			$("#form-roominfo").bootstrapValidator({
+		        message: 'This value is not valid',
+		        fields: {
+		            room_no: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '房间号码不能为空'
+		                    }
+		                }
+		            },
+		            room_area: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '房间面积不能为空'
+		                    },
+		                    regexp: {
+								regexp: /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/,
+								message: '请输入正确的面积'
+		                    }
+		                }
+		            },
+		            room_rent: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '房间租金不能为空'
+		                    }
+		                }
+		            },
+		        }
+		    });
 		    // 提交
 		    $('#form-submit').on('click', function() {
 		    	var url = checkPostUrl($('#post').val());
-		    	console.log($('#form-roominfo').serialize());
-		  //   	var bootstrapValidator = $("#form-roominfo").data('bootstrapValidator');
-				// bootstrapValidator.validate();
-				// if(bootstrapValidator.isValid()) {
-				// 	$.post(url, $('#form-roominfo').serialize(), function(data) {
-			 //            if (data.code == 200) {
-			 //            	$('.ajax-err-msg p').text(data.message);
-			 //            	$('.ajax-err-msg').addClass('in success').show();
-			 //            	setTimeout(function() {
-			 //            		$('.ajax-err-msg').removeClass('in success').hide();
-			 //            		$('#roomModal').modal('hide');
-			 //            	}, 3000);
-			 //            }
-			 //            if (data.code == 400) {
-			 //            	$('.ajax-err-msg p').text(data.message);
-			 //            	$('.ajax-err-msg').addClass('in error').show();
-			 //            	setTimeout(function() {
-			 //            		$('.ajax-err-msg').removeClass('in error').hide();
-			 //            	}, 3000);
-			 //            }
-			 //        }, 'JSON');
-				// }
+		    	var bootstrapValidator = $("#form-roominfo").data('bootstrapValidator');
+				bootstrapValidator.validate();
+				if(bootstrapValidator.isValid()) {
+					$.post(url, $('#form-roominfo').serialize(), function(data) {
+			            if (data.code == 200) {
+			            	$('.ajax-err-msg p').text(data.message);
+			            	$('.ajax-err-msg').addClass('in success').show();
+			            	setTimeout(function() {
+			            		$('.ajax-err-msg').removeClass('in success').hide();
+			            		$('#roomModal').modal('hide');
+			            	}, 3000);
+			            }
+			            if (data.code == 400) {
+			            	$('.ajax-err-msg p').text(data.message);
+			            	$('.ajax-err-msg').addClass('in error').show();
+			            	setTimeout(function() {
+			            		$('.ajax-err-msg').removeClass('in error').hide();
+			            	}, 3000);
+			            }
+			        }, 'JSON');
+				}
 		    });
 
 		    $('#form-roominfo input').on('focus', function() {

@@ -13,6 +13,8 @@ use think\Db;
 use think\Request;
 use think\Session;
 
+
+
 /**
  * 时间划分函数
  * @return string 当前所属时间段
@@ -27,6 +29,19 @@ function pms_get_time_division() {
 	else $hour_str = "晚上好";
 
 	return $hour_str;
+}
+
+/**
+ * 获取图片预览链接
+ * @param string $file 文件路径，相对于upload
+ * @param string $style 图片样式,支持各大云存储
+ * @return string
+ */
+function pms_get_image_preview_url($file)
+{
+	$upload = pms_get_domain() . pms_get_root() . DS . 'uploads' . DS;
+
+    return $upload . $file;
 }
 
 /**
@@ -140,12 +155,16 @@ function pms_get_links() {
 
 }
 
+/**
+ * 获取房间信息列表
+ * @param  array  $param 条件数组
+ * @return array         房间信息数组
+ */
 function pms_get_room_list($param = array()) {
 
-	$where = [
-	];
+	$where = isset($param['where']) ? $param['where'] : "";
 
-	$limit = empty($param['limit']) ? 10 : $param['limit'];
+	$limit = isset($param['limit']) ? $param['limit'] : "";
 	$order = empty($param['order']) ? 'r.create_time desc' : $param['order'];
 	$page = isset($param['page']) ? $param['page'] : false;
 
@@ -155,7 +174,6 @@ function pms_get_room_list($param = array()) {
 	$return = [];
 
 	if (empty($page)) {
-
 		$rooms = $rooms->limit($limit)->select();
         $return['rooms'] = $rooms;
 	
@@ -183,13 +201,241 @@ function pms_get_room_list($param = array()) {
 
 }
 
-function insert_rooms($data) {
+/**
+ * 添加房间信息
+ * @param  array  $data  房间信息
+ * @return array         数据库添加状态
+ */
+function pms_insert_rooms($data) {
 	$data['room_status'] = 0;	// 未租
 	$data['create_time'] = date('Y-m-d H:i:s', time());
 	
 	return Db::name('rooms') -> insert($data);
 }
 
-function update_rooms($data) {
+/**
+ * 更新房间信息
+ * @param  array  $param 房间信息
+ * @return array         数据库更新状态
+ */
+function pms_update_rooms($data) {
 	return Db::name('rooms') -> update($data);
+}
+
+/**
+ * 更新房间入驻状态
+ * @param  string  $ids 	房间ID
+ * @param  int     $status  房间状态 	
+ * @return array         	数据库更新状态
+ */
+function pms_update_room_status($ids, $status) {
+	$where = [
+		'room_no' => ['in', $ids]
+	];
+	return Db::name('rooms') -> where($where) -> setField('room_status', $status);
+}
+
+/**
+ * 获取公司信息
+ * @param  int 	  $id 公司ID
+ * @return array      公司信息数组
+ */
+function pms_get_corp($id) {
+
+	$where = [
+		'id' => $id
+	];
+
+	$corps = Db::name('corp')
+				   -> where($where)
+				   ->find();
+
+	return $corps;
+}
+
+/**
+ * 获取公司信息列表
+ * @param  array  $param 条件数组
+ * @return array         公司信息数组
+ */
+function pms_get_corp_list($param = array()) {
+		
+	$where = isset($param['where']) ? $param['where'] : "";
+
+	$limit = isset($param['limit']) ? $param['limit'] : "";
+	$order = empty($param['order']) ? 'c.create_time desc' : $param['order'];
+	$page = isset($param['page']) ? $param['page'] : false;
+
+	$field = isset($param['field']) ? $param['field'] : "c.*, s.rids, s.end_time";
+	// 入驻房间信息
+	$join = [
+		['pms_settled s', 'c.id = s.cid', 'LEFT']
+	];
+
+	$corps = Db::name('corp') -> alias('c')
+					-> where(['c.corp_status'=>array('neq', 0)])
+					-> where($where)
+					-> join($join)
+					-> field($field)
+					-> order($order);
+	$return = [];
+
+	if (empty($page)) {
+		$corps = $corps->limit($limit)->select();
+        $return['corps'] = $corps;
+	} else {
+
+        if (is_array($page)) {
+            if (empty($page['list_rows'])) {
+                $page['list_rows'] = 10;
+            }
+
+            $corps = $corps->paginate($page);
+        } else {
+            $corps = $corps->paginate(intval($page));
+        }
+
+        $corps->appends(request()->param());
+
+        $return['corps']    = $corps->items();
+        $return['page']        = $corps->render();
+        $return['total']       = $corps->total();
+        $return['total_pages'] = $corps->lastPage();
+	}
+
+	return $return;
+}
+
+/**
+ * 添加公司信息
+ * @param  array  $data  公司信息
+ * @return array         信息添加状态
+ */
+function pms_insert_corp($data) {
+	
+	$data['corp_status'] = 1;	// 正常
+	$data['create_time'] = date('Y-m-d H:i:s', time());
+	$data['update_time'] = date('Y-m-d H:i:s', time());
+
+	return Db::name('corp') -> insert($data);
+}
+
+/**
+ * 更新公司信息
+ * @param  array  $data  公司信息
+ * @return array         信息添加状态
+ */
+function pms_update_corp($data) {
+	
+	$data['update_time'] = date('Y-m-d H:i:s', time());
+
+	return Db::name('corp') -> where( ['id'=>$data['id']] ) -> update($data);
+}
+
+function pms_del_corp($id) {
+
+	// 未入驻，直接删除
+	if ($settled = pms_corp_settled($id)) {
+		// 如果已入驻，修改入驻状态
+		pms_update_settled_status($settled['id'], 0);
+		// 修改入驻房间状态	
+		pms_update_room_status($settled['rids'], 0);
+	}
+	// 修改公司状态 为 0
+	pms_update_corp_status($id, 0);
+
+	return true;
+	
+}
+
+/**
+ * 更新公司状态
+ * @param  int $id     公司ID
+ * @param  int $status 公司状态
+ * @return 
+ */
+function pms_update_corp_status($id, $status) {
+	
+	return Db::name('corp') -> where(['id' => $id]) -> setField('corp_status', $status);
+}
+
+function pms_corp_settled($id) {
+	
+	return Db::name('settled') -> where(['cid' => $id]) -> field('id, rids') -> find();
+}
+
+
+function pms_corp_status_to_string($status) {
+	$msg = '';
+	switch ($status) {
+		case 0:
+			$msg = '已注销';
+			break;
+		case 2:
+			$msg = '已入驻';
+			break;
+		case 3:
+			$msg = '到期';
+			break;
+
+		default:
+			$msg = '未入驻';
+			break;
+	}
+	return $msg;
+}
+
+/**
+ * 添加公司入驻信息
+ * @param  array  $data 入驻信息
+ * @return array        信息添加状态
+ */
+function pms_insert_settled($data) {
+	
+	$data['settled_status'] = 1;	// 正常
+	$data['create_time'] = date('Y-m-d H:i:s', time());
+
+	return Db::name('settled') -> insert($data);
+}
+
+function pms_update_settled_status($id, $status) {
+
+	return Db::name('settled') -> where(['id' => $id]) -> setField('settled_status', $status);
+}
+
+/**
+ * 入驻成功，更新相关状态
+ * @param  array $data 入驻信息数组
+ * @return        
+ */
+function pms_settled_success($data) {
+
+	// 更新房间状态
+	if (!empty($data['rids'])) {
+		pms_update_room_status($data['rids'], 1);
+	}
+	// 更新公司状态
+	if (!empty($data['cid'])) {
+		pms_update_corp_status($data['cid'], 2);
+	}
+	// 添加支付状态
+	pms_insert_payment($data['cid'], $data['rent'], 1);
+}
+
+
+/**
+ * 添加缴费信息
+ * @param  int 	 $id       入驻信息ID
+ * @param  float $rent     缴费金额
+ * @param  int   $pay_type 缴费类型
+ * @return int             数据库添加状态
+ */
+function pms_insert_payment($id, $rent, $pay_type) {
+	$data['corp_id'] = $id;
+	$data['pay_amount'] = $rent;
+	$data['pay_type'] = $pay_type;
+	$data['pay_status'] = 1;
+	$data['create_time'] = date('Y-m-d H:s:i', time());
+
+	return Db::name('payment') -> insert($data);
 }

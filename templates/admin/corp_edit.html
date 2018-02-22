@@ -1,0 +1,114 @@
+{include file="public/header"}
+<style>
+    body { background-color: #fff; }
+</style>
+<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap-fileinput.css">
+<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap-tagsinput.css">
+<form class="form-horizontal" id="form-corpinfo" action="{:url('admin/Corp/edit_post')}" method="post" style="width: 70%; margin: 0 auto; padding: 65px 0;">
+    <div class="form-group">
+        <label for="" class="col-sm-3 control-label"><span class="color-red input-must">*</span>公司名称</label>
+        <div class="col-sm-9">
+            <input type="hidden" name="id" value="{$corp.id}">
+            <input type="text" class="form-control" name="corp_name" value="{$corp.corp_name}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-sm-3 control-label"><span class="color-red input-must">*</span>公司法人</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="corp_person" value="{$corp.corp_person}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-sm-3 control-label"><span class="color-red input-must">*</span>联系方式</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="corp_contact" value="{$corp.corp_contact}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-sm-3 control-label"><span class="color-red input-must">*</span>身份证号码</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" name="corp_idcard" value="{$corp.corp_idcard}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-sm-3 control-label">身份证件</label>
+        <div class="col-sm-4">
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+                <div class="fileinput-new thumbnail" style="width: 100%;height:112px;">
+                    {if condition="empty($corp.papers.front)"}
+                        <img style="width: 100%;height: auto;" src="__ADMIN__/assets/images/noimage.png" alt="" />
+                    {else/}
+                        <img style="width: 100%;height: auto;" src="{:pms_get_image_preview_url($corp.papers.front)}" alt="" />
+                    {/if}
+                </div>
+                <div class="fileinput-preview fileinput-exists thumbnail" style="width: 100%;height: 112px;"></div>
+                <div class="text-center pos-relative">
+                    <input type="file" class="filehidden" accept="image/gif,image/jpeg,image/x-png" />
+                    <input type="text" name="papers[front]" value="{$corp.papers.front}" class="no-visible">
+                    <span>正面</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+                <div class="fileinput-new thumbnail" style="width: 100%;height:112px;">
+                    {if condition="empty($corp.papers.reverse)"}
+                        <img style="width: 100%;height: auto;" src="__ADMIN__/assets/images/noimage.png" alt="" />
+                    {else/}
+                        <img style="width: 100%;height: auto;" src="{:pms_get_image_preview_url($corp.papers.reverse)}" alt="" />
+                    {/if}
+                </div>
+                <div class="fileinput-preview fileinput-exists thumbnail" style="width: 100%;height: 112px;"></div>
+                <div class="text-center pos-relative">
+                    <input type="file" class="filehidden" accept="image/gif,image/jpeg,image/x-png" />
+                    <input type="text" name="papers[reverse]"  value="{$corp.papers.reverse}" class="no-visible">
+                    <span>反面</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-sm-3 control-label">营业执照</label>
+        <div class="col-sm-4">
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+                <div class="fileinput-new thumbnail" style="width: 100%;height:112px;">
+                    {if condition="empty($corp.papers.license)"}
+                        <img style="width: 100%;height: auto;" src="__ADMIN__/assets/images/noimage.png" alt="" />
+                    {else/}
+                        <img style="width: 100%;height: auto;" src="{:pms_get_image_preview_url($corp.papers.license)}" alt="" />
+                    {/if}
+                </div>
+                <div class="fileinput-preview fileinput-exists thumbnail" style="width: 100%;height: 112px;"></div>
+                <div class="text-center pos-relative">
+                    <input type="file" class="filehidden" accept="image/gif,image/jpeg,image/x-png" />
+                    <input type="text" name="papers[license]"  value="{$corp.papers.license}" class="no-visible">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-sm-3 control-label">经营范围</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" placeholder="添加经营类目"  value="{$corp.corp_scope}" name="corp_scope" data-role="tagsinput">
+            <p class="help-block color-a94442">输入标签，Enter确认</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="hidden" value="add_post" id="post">
+        <div class="col-sm-offset-3 col-sm-9">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">重置</button>
+            <button type="button" class="btn btn-success" id="form-corp-submit">提交</button>
+        </div>
+    </div>
+</form>
+<div class="ajax-err-msg fade">
+    <p></p>
+</div>
+{include file="public/script"}
+<script src="__PUBLIC__/bootstrap/js/bootstrap-tagsinput.min.js"></script>
+<script src="__PUBLIC__/bootstrap/js/bootstrap-validator.min.js"></script>
+<script src="__PUBLIC__/bootstrap/js/bootstrap-fileinput.js"></script>
+<script src="__ADMIN__/assets/js/jquery.form.js"></script>
+<script src="__ADMIN__/assets/js/corp.js"></script>
