@@ -23,16 +23,16 @@ class Property extends AdminBaseController
 	 */
 	public function index() {
 
-		// 入驻公司 计数
-
-		//公司信息列表
+		$param['page'] = 8;
+		//获得缴费记录列表
+		$this->assign('pay_list', pms_get_payment_list($param));
 
 		return $this->fetch();	
 	}
 
 	public function paypage() {
 
-		$this->get_normal_corps();
+		$this->get_settled_corps();
 
 		$type = input('type');
 
@@ -50,12 +50,28 @@ class Property extends AdminBaseController
 	 */
 	public function payment() {
 
+		if ($this->request->isPost()) {
+			$data = $this->request->param();
+
+			$result = $this->validate($data, 'Property');
+
+			if ($result !== true) {
+				exit(json_encode([ 'code'=>400, 'message'=>$result ]));
+			} else {
+				$res = pms_insert_payment($data['corp_id'], $data['rent'], $data['type'], $data['end_time']);
+				
+				if ($res) {
+					exit(json_encode([ 'code'=>200, 'message'=>'缴费信息添加成功' ]));
+				}
+			}
+			
+		}
 		
 	}
 
-	public function get_normal_corps() {
+	public function get_settled_corps() {
 		$param['where'] = [
-			'c.corp_status' => ['neq', 0]
+			'c.corp_status' => ['eq', 2]
 		];
 		$param['field'] = "c.corp_name, c.id, s.rids, s.room_area";
 		$param['order'] = "c.corp_name DESC";

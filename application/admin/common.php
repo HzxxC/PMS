@@ -348,6 +348,10 @@ function pms_del_corp($id) {
 	
 }
 
+function pms_get_settled_corp_count() {
+	return Db::name('corp') -> where( ['corp_status'=>2] ) -> count();
+}
+
 /**
  * 更新公司状态
  * @param  int $id     公司ID
@@ -438,7 +442,7 @@ function pms_settled_success($data) {
 		pms_update_corp_status($data['cid'], 2);
 	}
 	// 添加支付状态
-	pms_insert_payment($data['cid'], $data['rent'], 1);
+	pms_insert_payment($data['cid'], $data['rent'], 1, $data['end_time']);
 }
 
 
@@ -449,12 +453,62 @@ function pms_settled_success($data) {
  * @param  int   $pay_type 缴费类型
  * @return int             数据库添加状态
  */
-function pms_insert_payment($id, $rent, $pay_type) {
+function pms_insert_payment($id, $rent, $pay_type, $end_time) {
+	
 	$data['corp_id'] = $id;
 	$data['pay_amount'] = $rent;
 	$data['pay_type'] = $pay_type;
 	$data['pay_status'] = 1;
+	$data['end_time'] = $end_time;
 	$data['create_time'] = date('Y-m-d H:s:i', time());
 
 	return Db::name('payment') -> insert($data);
+}
+
+function pms_get_payment_list($param) {
+	
+	$where = isset($param['where']) ? $param['where'] : "";
+
+	$limit = isset($param['limit']) ? $param['limit'] : "";
+	$order = empty($param['order']) ? 'p.create_time desc' : $param['order'];
+	$page = isset($param['page']) ? $param['page'] : false;
+
+	$field = isset($param['field']) ? $param['field'] : "p.*, c.corp_name";
+	// 入驻房间信息
+	$join = [
+		['pms_corp c', 'p.corp_id = c.id', 'LEFT']
+	];
+
+	$payment = Db::name('payment') -> alias('p')
+					-> where(['p.pay_status'=>'1'])
+					-> where($where)
+					-> join($join)
+					-> field($field)
+					-> order($order);
+	$return = [];
+
+	if (empty($page)) {
+		$payment = $payment->limit($limit)->select();
+        $return['payment'] = $payment;
+	} else {
+
+        if (is_array($page)) {
+            if (empty($page['list_rows'])) {
+                $page['list_rows'] = 10;
+            }
+
+            $payment = $payment->paginate($page);
+        } else {
+            $payment = $payment->paginate(intval($page));
+        }
+
+        $payment->appends(request()->param());
+
+        $return['payment']     = $payment->items();
+        $return['page']        = $payment->render();
+        $return['total']       = $payment->total();
+        $return['total_pages'] = $payment->lastPage();
+	}
+
+	return $return;
 }

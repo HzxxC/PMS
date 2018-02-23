@@ -8,7 +8,7 @@ body {
 <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap-select.min.css">
 <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap-fileinput.css">
 <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap-tagsinput.css">
-<form class="form-horizontal" id="form-settled" action="{:url('admin/Settled/add_post')}" method="post" enctype="multipart/form-data" style="width: 70%; margin: 0 auto; padding: 65px 0;">
+<form class="form-horizontal" id="form-payment" action="{:url('admin/Property/payment')}" method="post" enctype="multipart/form-data" style="width: 70%; margin: 0 auto; padding: 65px 0;">
     <div class="form-group">
         <label for="" class="col-sm-3 control-label">缴费公司</label>
         <div class="col-sm-6">
@@ -22,6 +22,7 @@ body {
     <div class="form-group">
         <label for="" class="col-sm-3 control-label">入驻房间</label>
         <div class="col-sm-4">
+            <input type="hidden" name="type" value="2">
             <input type="text" class="form-control" disabled id="room_no" name="room_area">
         </div>
     </div>
@@ -35,7 +36,7 @@ body {
         </div>
     </div>
     <div class="form-group">
-        <label for="" class="col-sm-3 control-label"><span class="color-red input-must">*</span>租金</label>
+        <label for="" class="col-sm-3 control-label"><span class="color-red input-must">*</span>物业费</label>
         <div class="col-sm-4">
             <div class="input-group">
                 <input type="text" class="form-control" name="rent" id="rent">
@@ -44,7 +45,7 @@ body {
         </div>
     </div>
     <div class="form-group">
-        <label for="" class="col-sm-3 control-label"><span class="color-red input-must">*</span>租用时间</label>
+        <label for="" class="col-sm-3 control-label"><span class="color-red input-must">*</span>到期日期</label>
         <div class="col-sm-4 input-icon-inner">
             <input type="text" class="form-control" id="datetimepicker-end" name="end_time" value="">
             <i class="fa fa-calendar  color-007BBE"></i>
@@ -54,7 +55,7 @@ body {
         <input type="hidden" value="add_post" id="post">
         <div class="col-sm-offset-3 col-sm-9">
             <button type="button" class="btn btn-danger" data-dismiss="modal">重置</button>
-            <button type="button" class="btn btn-success" id="form-settled-submit">提交</button>
+            <button type="button" class="btn btn-success" id="form-payment-submit">提交</button>
         </div>
     </div>
 </form>
@@ -65,8 +66,6 @@ body {
 <script src="__PUBLIC__/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
 <script src="__PUBLIC__/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="__PUBLIC__/bootstrap/js/bootstrap-select.min.js"></script>
-<script src="__PUBLIC__/bootstrap/js/bootstrap-tagsinput.min.js"></script>
 <script src="__PUBLIC__/bootstrap/js/bootstrap-validator.min.js"></script>
-<script src="__PUBLIC__/bootstrap/js/bootstrap-fileinput.js"></script>
 <script src="__ADMIN__/assets/js/jquery.form.js"></script>
 <script src="__ADMIN__/assets/js/property.js"></script>

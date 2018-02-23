@@ -63,15 +63,40 @@
 			<div class="table-body">
 				<table class="table table-bordered table-hover">
 			        <tr>
-			          <th>编号</th>
+			          <th>#</th>
 			          <th>缴费公司</th>
 			          <th>缴费类型</th>
 			          <th>缴费金额</th>
+			          <th>到期时间</th>
 			          <th>缴费时间</th>
 			          <th>状态</th>
 			        </tr>
+			         {volist name="pay_list.payment" id="vo"}
+                    <tr>
+                        <td class="text-center">{$vo.id}</td>
+                        <td class="text-center">{$vo.corp_name}</td>
+                        <td class="text-center">
+                        	{if condition="$vo.pay_type eq 1"}
+                        		租金
+                        	{else/}
+                        		物业费
+                        	{/if}
+                        </td>
+                        <td class="text-center">{$vo.pay_amount}</td>
+                        <td class="text-center">{$vo.end_time}</td>
+                        <td class="text-center">{$vo.create_time}</td>
+                        <td class="text-center">
+                        	{if condition="$vo.pay_status eq 1"}
+                        		<span class="btn btn-style-2 btn-success">成功</span>
+                        	{else/}
+                        		<span class="btn btn-style-2 btn-danger">失败</span>
+                        	{/if}
+                        </td>
+                    </tr>
+                    {/volist}
 			    </table>
 			    <div class="pages f-right">
+					{$pay_list.page}
                 </div>
 			</div>
 		</div>

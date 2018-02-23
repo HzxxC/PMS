@@ -23,12 +23,12 @@ class Corp extends AdminBaseController
 	 */
 	public function index() {
 
-		// 入驻公司 计数
-
 		//公司信息列表
 		$param['page'] = 8;
 		// 房间列表
-		$this->assign("corp_list", pms_get_corp_list($param));
+		$corp_list = pms_get_corp_list($param);
+		$this->assign("corp_list", $corp_list);
+		$this->assign('corp_settled_count', pms_get_settled_corp_count());
 
 		return $this->fetch();	
 	}

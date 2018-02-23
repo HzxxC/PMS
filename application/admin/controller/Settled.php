@@ -38,7 +38,7 @@ class Settled extends AdminBaseController
 				if ($res) {
 					// 入驻成功后操作
 					pms_settled_success($data);
-					exit(json_encode([ 'code'=>200, 'message'=>'公司信息添加成功', 'data'=>$res ]));
+					exit(json_encode([ 'code'=>200, 'message'=>'入驻信息添加成功' ]));
 				}
 			}
 			
@@ -72,7 +72,7 @@ class Settled extends AdminBaseController
 
 	public function get_normal_corps() {
 		$param['where'] = [
-			'c.corp_status' => ['neq', 0]
+			'c.corp_status' => ['eq', 1]
 		];
 		$param['order'] = "c.corp_name DESC";
 

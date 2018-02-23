@@ -1,0 +1,71 @@
+{include file="public/header"}
+<style>
+body {
+    background-color: #fff;
+}
+</style>
+<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap-fileinput.css">
+<link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap-tagsinput.css">
+<form class="form-horizontal" id="form-payment" action="{:url('admin/Property/payment')}" method="post" enctype="multipart/form-data" style="width: 70%; margin: 0 auto; padding: 65px 0;">
+    <div class="form-group">
+        <label for="" class="col-sm-3 control-label">缴费公司</label>
+        <div class="col-sm-6">
+            <select class="selectpicker" data-live-search="true" title="请选择公司" data-width="100%" name="corp_id" id="corpSelect">
+                {volist name="normal_corps.corps" id="vo"}
+                    <option value="{$vo.id}" data-rids="{$vo.rids}" data-area="{$vo.room_area}">{$vo.corp_name}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-sm-3 control-label">入驻房间</label>
+        <div class="col-sm-4">
+            <input type="hidden" name="type" value="1">
+            <input type="text" class="form-control" disabled id="room_no" name="room_area">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-sm-3 control-label">租用面积</label>
+        <div class="col-sm-4">
+            <div class="input-group">
+                <input type="text" class="form-control" disabled id="room_area" name="room_area">
+                <div class="input-group-addon">m<sup>2</sup></div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-sm-3 control-label"><span class="color-red input-must">*</span>租金</label>
+        <div class="col-sm-4">
+            <div class="input-group">
+                <input type="text" class="form-control" name="rent" id="rent">
+                <div class="input-group-addon">元</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-sm-3 control-label"><span class="color-red input-must">*</span>到租日期</label>
+        <div class="col-sm-4 input-icon-inner">
+            <input type="text" class="form-control" id="datetimepicker-end" name="end_time" value="">
+            <i class="fa fa-calendar  color-007BBE"></i>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="hidden" value="add_post" id="post">
+        <div class="col-sm-offset-3 col-sm-9">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">重置</button>
+            <button type="button" class="btn btn-success" id="form-payment-submit">提交</button>
+        </div>
+    </div>
+</form>
+<div class="ajax-err-msg fade">
+    <p></p>
+</div>
+{include file="public/script"}
+<script src="__PUBLIC__/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+<script src="__PUBLIC__/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="__PUBLIC__/bootstrap/js/bootstrap-select.min.js"></script>
+<script src="__PUBLIC__/bootstrap/js/bootstrap-validator.min.js"></script>
+<script src="__ADMIN__/assets/js/jquery.form.js"></script>
+<script src="__ADMIN__/assets/js/property.js"></script>
