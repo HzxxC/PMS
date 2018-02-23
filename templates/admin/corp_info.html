@@ -1,0 +1,145 @@
+{include file="public/header"}
+<link rel="stylesheet" href="__ADMIN__/assets/css/zoomify.min.css">
+<style>
+body {
+    background-color: #ecf0f5;
+}
+.thumbnail { border: none; }
+.thumbnail img { border-radius: 6px; }
+</style>
+<div class="container">
+    <div class="tab-base tab-stacked-left">
+        <!--Nav tabs-->
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a data-toggle="tab" href="#demo-stk-lft-tab-1">公司信息</a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#demo-stk-lft-tab-2">入驻信息</a>
+            </li>
+        </ul>
+        <!--Tabs Content-->
+        <div class="tab-content">
+            <div id="demo-stk-lft-tab-1" class="tab-pane fade active in">
+                <form class="form-horizontal" style="width: 90%; margin: 0 auto; padding: 20px 0;">
+                    <div class="form-group">
+                        <label for="" class="col-sm-3 control-label">公司名称</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static">{$corp.corp_name}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-3 control-label">公司法人</label>
+                        <div class="col-sm-6">
+                            <p class="form-control-static">{$corp.corp_person}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-3 control-label">联系方式</label>
+                        <div class="col-sm-6">
+                            <p class="form-control-static">{$corp.corp_contact}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-3 control-label">身份证号码</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static">{$corp.corp_idcard}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-3 control-label">身份证件</label>
+                        <div class="col-sm-4">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail" style="width: 100%;height:112px;">
+                                    {if condition="empty($corp.papers.front)"}
+				                        <img style="width: 100%;height: auto;" src="__ADMIN__/assets/images/noimage.png" alt="" />
+				                    {else/}
+				                        <img style="width: 100%;height: auto;" src="{:pms_get_image_preview_url($corp.papers.front)}" alt="" />
+				                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail" style="width: 100%;height:112px;">
+                                    {if condition="empty($corp.papers.reverse)"}
+				                        <img style="width: 100%;height: auto;" src="__ADMIN__/assets/images/noimage.png" alt="" />
+				                    {else/}
+				                        <img style="width: 100%;height: auto;" src="{:pms_get_image_preview_url($corp.papers.reverse)}" alt="" />
+				                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-3 control-label">营业执照</label>
+                        <div class="col-sm-4">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail" style="width: 100%;height:112px;">
+                                    {if condition="empty($corp.papers.license)"}
+				                        <img style="width: 100%;height: auto;" src="__ADMIN__/assets/images/noimage.png" alt="" />
+				                    {else/}
+				                        <img style="width: 100%;height: auto;" src="{:pms_get_image_preview_url($corp.papers.license)}" alt="" />
+				                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-3 control-label">经营范围</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static">{$corp.corp_scope}</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="demo-stk-lft-tab-2" class="tab-pane fade">
+            	<form class="form-horizontal" style="width: 90%; margin: 0 auto; padding: 20px 0;">
+                    <div class="form-group">
+                        <label for="" class="col-sm-3 control-label">申请房间</label>
+                        <div class="col-sm-9">
+                            <p class="form-control-static">{$settled.rids}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-3 control-label">租用面积</label>
+                        <div class="col-sm-6">
+                            <p class="form-control-static">{$settled.room_area}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-3 control-label">租金</label>
+                        <div class="col-sm-6">
+                            <p class="form-control-static">{$settled.rent}&nbsp;&nbsp;元</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-3 control-label">租用时间</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static">{$settled.begin_time}&nbsp;&nbsp;~&nbsp;&nbsp;{$settled.end_time}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-3 control-label">合同</label>
+                        <div class="col-sm-4">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail" style="width: 100%;height:112px;">
+                                    {if condition="empty($settled.contract)"}
+				                        <img style="width: 100%;height: auto;" src="__ADMIN__/assets/images/noimage.png" alt="" />
+				                    {else/}
+				                        <img style="width: 100%;height: auto;" src="{:pms_get_image_preview_url($settled.contract)}" alt="" />
+				                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public/script"}
+<script src="__ADMIN__/assets/js/zoomify.min.js"></script>
+<script>
+	$('.thumbnail img').zoomify();
+</script>

@@ -75,7 +75,7 @@ $(function() {
             var doc = "#roomSelect option[value='" + ids[i] + "']";
             total += parseFloat($(doc).data('area'));
         }
-        $('#room_area').val(total.toFixed(2));
+        $('#room_area, #room_area_post').val(total.toFixed(2));
     }
 
     function sumRoomRent(ids) {

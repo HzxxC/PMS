@@ -450,6 +450,68 @@ h3.line-before:before {
 .table-body table tr:nth-child(odd) td {
 	background-color: #f5f5f5;
 }
+.tab-stacked-left, .tab-stacked-right {
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+.tab-stacked-left .nav-tabs, .tab-stacked-right .nav-tabs, .tab-stacked-left .tab-content, .tab-stacked-right .tab-content {
+    display: table-cell;
+    vertical-align: top;
+}
+.tab-stacked-left .nav-tabs {
+    width: 1%;
+    border: 0;
+}
+.tab-base .nav-tabs>li {
+    margin-bottom: -2px;
+}
+.tab-stacked-left .nav-tabs>li, .tab-stacked-right .nav-tabs>li {
+    float: none;
+    margin: 0;
+}
+.tab-stacked-left .nav-tabs>li>a, .tab-stacked-right .nav-tabs>li>a {
+    margin: 0 0 2px;
+}
+.tab-stacked-left .nav-tabs>li a {
+    border-right-color: transparent;
+    border-radius: 0;
+}
+.tab-base .nav-tabs>li:not(.active)>a {
+    background-color: rgba(0,0,0,0.05);
+    opacity: .7;
+    transition: opacity,0.3s;
+}
+.tab-base .nav-tabs>li:not(.active)>a:hover {
+    opacity: 1;
+    background-color: rgba(255,255,255,0.55);
+    border-bottom-color: transparent;
+    transition: opacity,0.3s;
+}
+.tab-stacked-left.tab-base .nav-tabs>li:not(.active) a:hover {
+    border-right-color: transparent;
+}
+.tab-base .nav-tabs>.active>a, .tab-base .nav-tabs>.active a:hover, .tab-base .nav-tabs>.active>a:focus {
+    border-color: transparent;
+}
+.tab-base .tab-content {
+    background-color: #fff;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.05);
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    padding: 15px;
+}
+.tab-stacked-left .nav-tabs, .tab-stacked-right .nav-tabs, .tab-stacked-left .tab-content, .tab-stacked-right .tab-content {
+    display: table-cell;
+    vertical-align: top;
+}
+.tab-stacked-left .tab-content, .tab-stacked-right .tab-content {
+    overflow: hidden;
+}
+.tab-stacked-left .tab-content {
+    border-left-color: transparent;
+    border-radius: 0;
+}
 
 
 /* footer */

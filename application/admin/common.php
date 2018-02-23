@@ -403,6 +403,25 @@ function pms_update_settled_status($id, $status) {
 	return Db::name('settled') -> where(['id' => $id]) -> setField('settled_status', $status);
 }
 
+function pms_get_settled($param) {
+	
+	$condition = [
+		'settled_status' => ['neq', 0]
+	];
+	
+	$where = isset($param['where']) ? $param['where'] : "1";
+
+	$field = isset($param['field']) ? $param['field'] : "*";
+
+	$settled = Db::name('settled')
+					-> where($condition)
+					-> where($where)
+					-> field($field) -> find();
+
+
+    return $settled;
+}
+
 /**
  * 入驻成功，更新相关状态
  * @param  array $data 入驻信息数组

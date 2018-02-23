@@ -27,6 +27,32 @@ function openIframeLayer(url, title, options) {
 
 }
 
+function openIframeButtonLayer(url, title, options) {
+
+    var params = {
+        type: 2,
+        title: title,
+        shadeClose: true,
+        shade: 0.8,
+        area: ['776px', '795px'],
+        btn: ['关闭'],
+        move: false,
+        content: url,
+        yes: function (index, layero) {
+            //do something
+            layer.close(index); //如果设定了yes回调，需进行手工关闭
+        }
+    };
+    params     = options ? $.extend(params, options) : params;
+
+    Wind.css('layer');
+
+    Wind.use("layer", function () {
+        layer.open(params);
+    });
+
+}
+
 function openDialogLayer(url, options) {
 
     var params = {

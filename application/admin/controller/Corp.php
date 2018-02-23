@@ -103,6 +103,22 @@ class Corp extends AdminBaseController
 		}
 	}
 
+	public function info() {
+		$id = input('id');
+		if ($id) {
+			// 公司信息
+			$corp = pms_get_corp($id);
+			$corp['papers'] = json_decode($corp['papers'], true);
+			$this->assign('corp', $corp);
+			// 入驻信息
+			$param['where'] = [
+				'cid' => $id
+			];
+			$this->assign('settled', pms_get_settled($param));
+		}
+		return $this->fetch();
+	}
+
 	/**
 	 * 公司管理 获得未租房间列表
 	 */

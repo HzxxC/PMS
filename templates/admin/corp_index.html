@@ -72,7 +72,7 @@
                     {volist name="corp_list.corps" id="vo"}
                     <tr>
                         <td class="text-center">{$vo.id}</td>
-                        <td class="text-center"><a href="javascript:parent.openIframeLayer('{:url('admin/Corp/edit', array('id'=>$vo.id))}','公司信息详情',{});">{$vo.corp_name}</a></td>
+                        <td class="text-center"><a href="javascript:parent.openIframeButtonLayer('{:url('admin/Corp/info', array('id'=>$vo.id))}','公司信息详情',{});">{$vo.corp_name}</a></td>
                         <td class="text-center">{$vo.corp_person}</td>
                         <td class="text-center">{$vo.corp_contact}</td>
                         <td class="text-center">{$vo.rids | default="未入驻"}</td>
